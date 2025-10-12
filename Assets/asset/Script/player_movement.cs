@@ -2,39 +2,42 @@ using UnityEngine;
 
 public class player_movement : MonoBehaviour
 {
-    public Rigidbody rb;
-    public float speed = 10f;
-    public float laneDistance = 3f;
-    public float laneChangeSpeed = 10f; 
+    public float speed = 20f;
+    public float maxSpeed = 30f;
+    public float acceleration = 0.1f;
 
-    private int currentLane = 1;
+    public float laneDistance = 2f;
+    public float moveSpeed = 8f;
+    public bool reverseControls = false;
+
+    private int currentLane = 1; 
     private Vector3 targetPosition;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
         targetPosition = transform.position;
     }
 
     void Update()
     {
-        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, speed);
+        speed += acceleration * Time.deltaTime;
+        if (speed > maxSpeed) speed = maxSpeed;
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            if (currentLane > 0) currentLane--;
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            if (currentLane < 2) currentLane++; 
-        }
+        int direction = 0;
+        if (Input.GetKeyDown(KeyCode.A)) direction = reverseControls ? 1 : -1;
+        if (Input.GetKeyDown(KeyCode.D)) direction = reverseControls ? -1 : 1;
 
-        targetPosition = new Vector3((currentLane - 1) * laneDistance, transform.position.y, transform.position.z);
+        currentLane = Mathf.Clamp(currentLane + direction, 0, 2);
+
+        float targetX = (currentLane - 1) * laneDistance;
+        targetPosition = new Vector3(targetX, transform.position.y, transform.position.z);
+
+        transform.position += new Vector3(0f, 0f, speed * Time.deltaTime);
     }
 
     void FixedUpdate()
     {
-        Vector3 newPos = Vector3.Lerp(transform.position, targetPosition, Time.fixedDeltaTime * laneChangeSpeed);
-        rb.MovePosition(new Vector3(newPos.x, transform.position.y, transform.position.z + speed * Time.fixedDeltaTime));
+        Vector3 newPos = Vector3.Lerp(transform.position, targetPosition, moveSpeed * Time.fixedDeltaTime);
+        transform.position = new Vector3(newPos.x, transform.position.y, transform.position.z);
     }
 }

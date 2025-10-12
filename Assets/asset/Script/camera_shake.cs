@@ -1,26 +1,36 @@
-using System.Collections;
 using UnityEngine;
 
 public class camera_shake : MonoBehaviour
 {
-    public IEnumerator Shake(float duration, float magnitude)
+    private Vector3 shakeOffset = Vector3.zero;
+    private float shakeMagnitude = 1f;
+    private float shakeTimeRemaining = 0f;
+    private Vector3 basePosition;
+
+    void LateUpdate()
     {
-        Vector3 originalPos = transform.localPosition;
+        basePosition = transform.position - shakeOffset;
 
-        float elapsed = 0.0f;
-
-        while (elapsed < duration)
+        if (shakeTimeRemaining > 0f)
         {
-            float x = Random.Range(-1f, 1f) * magnitude;
-            float y = Random.Range(-1f, 1f) * magnitude;
-
-            transform.localPosition = new Vector3(originalPos.x + x, originalPos.y + y, originalPos.z);
-
-            elapsed += Time.deltaTime;
-
-            yield return null;
+            shakeOffset = new Vector3(
+                Random.Range(-0.1f, 0.1f) * shakeMagnitude,
+                Random.Range(-0.1f, 0.1f) * shakeMagnitude,
+                0f
+            );
+            shakeTimeRemaining -= Time.deltaTime;
+        }
+        else
+        {
+            shakeOffset = Vector3.zero;
         }
 
-        transform.localPosition = originalPos;
+        transform.position = basePosition + shakeOffset;
+    }
+
+    public void TriggerShake(float duration, float magnitude)
+    {
+        shakeMagnitude = magnitude;
+        shakeTimeRemaining = duration;
     }
 }
