@@ -2,39 +2,40 @@ using UnityEngine;
 
 public class giant_movement : MonoBehaviour
 {
-    public Transform player;
-    public float startSpeed = 20f;
+    public float speed = 20f;
     public float maxSpeed = 30f;
-    public float acceleration = 0.2f;
-    public float followDistance = 5f;
+    public float acceleration = 0.4f;
 
-    private float currentSpeed;
+    public float laneDistance = 2f;
+    public float moveSpeed = 8f;
+    public bool reverseControls = false;
+
+    private int currentLane = 1; 
+    private Vector3 targetPosition;
 
     void Start()
     {
-        currentSpeed = startSpeed;
+        targetPosition = transform.position;
     }
 
     void Update()
     {
-        if (player == null) return;
+        speed += acceleration * Time.deltaTime;
+        if (speed > maxSpeed) speed = maxSpeed;
 
-        currentSpeed += acceleration * Time.deltaTime;
-        if (currentSpeed > maxSpeed)
-            currentSpeed = maxSpeed;
+        int direction = 0;
 
-        float targetZ = player.position.z - followDistance;
+        currentLane = Mathf.Clamp(currentLane + direction, 0, 2);
 
-        if (transform.position.z < targetZ)
-        {
-            float newZ = transform.position.z + currentSpeed * Time.deltaTime;
+        float targetX = (currentLane - 1) * laneDistance;
+        targetPosition = new Vector3(targetX, transform.position.y, transform.position.z);
 
-            if (newZ > targetZ)
-                newZ = targetZ;
+        transform.position += new Vector3(0f, 0f, speed * Time.deltaTime);
+    }
 
-            transform.position = new Vector3(0f, 0f, newZ);
-        }
-
-        transform.position = new Vector3(0f, 0f, transform.position.z);
+    void FixedUpdate()
+    {
+        Vector3 newPos = Vector3.Lerp(transform.position, targetPosition, moveSpeed * Time.fixedDeltaTime);
+        transform.position = new Vector3(newPos.x, transform.position.y, transform.position.z);
     }
 }

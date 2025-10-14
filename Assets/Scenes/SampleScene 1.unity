@@ -238,7 +238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: be8e52a034d95fc41adf65e084995e00, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.63
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: be8e52a034d95fc41adf65e084995e00, type: 3}
       propertyPath: m_LocalRotation.w
@@ -388,8 +388,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 258278933}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 234.3}
-  m_LocalScale: {x: 8.353876, y: 1, z: 500}
+  m_LocalPosition: {x: 0, y: 0, z: 6639}
+  m_LocalScale: {x: 8.353876, y: 1, z: 13331.502}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -425,7 +425,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!65 &436721348
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1418,6 +1418,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMove: {fileID: 436721349}
+  girlTransform: {fileID: 0}
+  giantTransform: {fileID: 0}
   reverseDuration: 3
   skill2Button: {fileID: 1314096370}
 --- !u!1 &1314096368
@@ -1554,6 +1556,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1314096368}
   m_CullTransparentMesh: 1
+--- !u!1 &1362720257
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1362720258}
+  - component: {fileID: 1362720259}
+  m_Layer: 0
+  m_Name: Distance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1362720258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362720257}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.12, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 436721345}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1362720259
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362720257}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 8.88}
+  m_Center: {x: 0, y: 0, z: -4.7817655}
 --- !u!1 &1395930343
 GameObject:
   m_ObjectHideFlags: 0
@@ -1783,7 +1830,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 118
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &2062601414
 GameObject:
   m_ObjectHideFlags: 0
@@ -2827,11 +2874,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d94d0d66e029f543a9875453cf59b2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 436721345}
-  startSpeed: 20
+  speed: 20
   maxSpeed: 30
-  acceleration: 0.2
-  followDistance: 12
+  acceleration: 0.3
+  laneDistance: 2
+  moveSpeed: 8
+  reverseControls: 0
 --- !u!65 &5866666019906191877
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -5,29 +5,29 @@ using UnityEngine.SceneManagement;
 
 public class skill_button : MonoBehaviour
 {
-    public player_movement playerMove;  // assign your player
+    public player_movement playerMove;
+    public Transform girlTransform;
+    public Transform giantTransform;
+
     public float reverseDuration = 3f;
     private bool isReversed = false;
 
-    public Button skill2Button; // assign the Skill 2 button in inspector
-
-    private Color defaultColor;      // original button color
-    private bool playerInGrab = false; // is player inside grab?
+    public Button skill2Button;
+    private Color defaultColor; 
+    private bool playerInGrab = false;
 
     void Start()
     {
         if (skill2Button != null)
-            defaultColor = skill2Button.image.color; // store original color
+            defaultColor = skill2Button.image.color;
     }
 
     void Update()
     {
-        // constantly update Skill 2 button color based on player presence
         if (skill2Button != null)
             skill2Button.image.color = playerInGrab ? Color.green : defaultColor;
     }
 
-    // Called by grab trigger when player enters/exits
     public void SetPlayerInGrab(bool inside)
     {
         playerInGrab = inside;
@@ -43,17 +43,26 @@ public class skill_button : MonoBehaviour
         }
     }
 
-    // Skill 2 (manual press, optional)
+    // Skill 2
     public void Skill2()
     {
-        Debug.Log("Skill 2 activated!");
-        if (skill2Button != null)
-            skill2Button.image.color = Color.green;
+        if (playerInGrab)
+        {
+            Debug.Log("Skill 2 activated while in grab range!");
 
-        // SceneManager.LoadScene("NextSceneName"); // uncomment to change scene
+            if (girlTransform != null && giantTransform != null)
+            {
+                game_data.SavePositions(girlTransform, giantTransform);
+            }
+
+            SceneManager.LoadScene("grab_scene");
+        }
+        else
+        {
+            Debug.Log("Skill 2 failed — not in grab range.");
+        }
     }
 
-    // Skill 3
     public void Skill3()
     {
         Debug.Log("Skill 3 activated!");
