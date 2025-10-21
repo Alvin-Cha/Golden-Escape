@@ -21,12 +21,12 @@ public class skill_button : MonoBehaviour
     public Button skill3Button;
 
     [Header("Skill 2 UI Elements")]
-    public Image skill2Frame;          // frame image
-    public Image skill2Icon;           // icon image
-    public Sprite skill2NormalFrame;   // normal frame
-    public Sprite skill2ActiveFrame;   // active frame
-    public Sprite skill2NormalIcon;    // normal icon
-    public Sprite skill2ActiveIcon;    // active icon
+    public Image skill2Icon;
+    public Image skill2Frame;
+    public Sprite skill2NormalFrame;
+    public Sprite skill2ActiveFrame;
+    public Sprite skill2NormalIcon;
+    public Sprite skill2ActiveIcon;
 
     [Header("Skill 1 Cooldown UI")]
     [SerializeField] private Image imageCooldown1;
@@ -46,14 +46,12 @@ public class skill_button : MonoBehaviour
 
     void Start()
     {
-        // --- Initialize Cooldowns ---
         if (textCooldown1 != null) textCooldown1.gameObject.SetActive(false);
         if (imageCooldown1 != null) imageCooldown1.fillAmount = 0.0f;
 
         if (textCooldown3 != null) textCooldown3.gameObject.SetActive(false);
         if (imageCooldown3 != null) imageCooldown3.fillAmount = 0.0f;
 
-        // --- Button Listeners ---
         if (skill1Button != null)
             skill1Button.onClick.AddListener(Skill1);
         if (skill2Button != null)
@@ -61,7 +59,6 @@ public class skill_button : MonoBehaviour
         if (skill3Button != null)
             skill3Button.onClick.AddListener(OnSkill3Pressed);
 
-        // --- Default Skill 2 visuals ---
         if (skill2Frame != null && skill2NormalFrame != null)
             skill2Frame.sprite = skill2NormalFrame;
         if (skill2Icon != null && skill2NormalIcon != null)
@@ -70,7 +67,6 @@ public class skill_button : MonoBehaviour
 
     void Update()
     {
-        // update both frame and icon when player in grab range
         if (playerInGrab)
         {
             if (skill2Frame != null && skill2ActiveFrame != null)
