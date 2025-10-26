@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class player_movement : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class player_movement : MonoBehaviour
     public float laneDistance = 2f;
     public float moveSpeed = 8f;
     public bool reverseControls = false;
+
+    public Image speedBar;
 
     private int currentLane = 1; 
     private Vector3 targetPosition;
@@ -33,6 +36,12 @@ public class player_movement : MonoBehaviour
         targetPosition = new Vector3(targetX, transform.position.y, transform.position.z);
 
         transform.position += new Vector3(0f, 0f, speed * Time.deltaTime);
+
+        if (speedBar != null)
+        {
+            float fill = speed / maxSpeed;
+            speedBar.fillAmount = fill;
+        }
     }
 
     void FixedUpdate()
