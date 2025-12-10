@@ -6,17 +6,19 @@ public class rock_spawn : MonoBehaviour
     public Transform player;
     public float spawnDistance = 10f;
 
-    public float lane1X = -2f;
+    public float lane1X = -4.5f;
     public float lane2X = 0f;
-    public float lane3X = 2f;
+    public float lane3X = 4.5f;
 
     public skill_button skillManager;
+
+    // 🔹 The rotation you want for all spikes
+    private Quaternion spikeRotation = Quaternion.Euler(-89f, 78f, -78f);
 
     void Update()
     {
         if (skillManager == null || skillManager.isCoolDown3) return;
 
-        // check which numpad key pressed
         bool spawned = false;
 
         if (Input.GetKeyDown(KeyCode.Keypad1))
@@ -38,7 +40,6 @@ public class rock_spawn : MonoBehaviour
             spawned = true;
         }
 
-        // start cooldown if any spike was spawned
         if (spawned)
         {
             skillManager.UseCooldown3();
@@ -53,6 +54,7 @@ public class rock_spawn : MonoBehaviour
             player.position.z + spawnDistance
         );
 
-        Instantiate(spike, pos, Quaternion.identity);
+        // 🔹 Use your custom rotation here
+        Instantiate(spike, pos, spikeRotation);
     }
 }

@@ -1,14 +1,16 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class skill_2 : MonoBehaviour
 {
-    public skill_button skillManager; 
-        
+    public skill_button skillManager;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("player") && skillManager != null)
         {
-            skillManager.SetPlayerInGrab(true); //once here they should be able to get grabed and change the scene
+            skillManager.SetPlayerInGrab(true);
+            SceneManager.LoadScene("solo_grab_scene");
         }
     }
 

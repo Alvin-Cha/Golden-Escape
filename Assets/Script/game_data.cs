@@ -1,25 +1,37 @@
 using UnityEngine;
 
-public static class game_data 
+public static class game_data
 {
     public static float girlZ = 0f;
     public static float giantZ = 0f;
 
-    public static void SavePositions(Transform girl, Transform giant)
+    public static void SavePositions(float girl, float giant)
     {
-        girlZ = girl.position.z;
-        giantZ = giant.position.z;
+        girlZ = girl;
+        giantZ = giant;
+
+        PlayerPrefs.SetFloat("GirlZ", girl);
+        PlayerPrefs.SetFloat("GiantZ", giant);
+        PlayerPrefs.Save();
     }
 
-    public static void LoadPositions(Transform girl, Transform giant)
+    public static void LoadPositions()
     {
-        girl.position = new Vector3(girl.position.x, girl.position.y, girlZ);
-        giant.position = new Vector3(giant.position.x, giant.position.y, giantZ);
+        if (PlayerPrefs.HasKey("GirlZ"))
+            girlZ = PlayerPrefs.GetFloat("GirlZ");
+
+        if (PlayerPrefs.HasKey("GiantZ"))
+            giantZ = PlayerPrefs.GetFloat("GiantZ");
     }
 
-    public static void ResetPositions()
+#if UNITY_EDITOR
+    [UnityEditor.InitializeOnLoadMethod]
+    static void ClearSaveOnPlay()
     {
-        girlZ = 0f;
-        giantZ = 0f;
+        // This runs ONLY when you press Play inside the Unity editor
+        PlayerPrefs.DeleteKey("GirlZ");
+        PlayerPrefs.DeleteKey("GiantZ");
+        Debug.Log("Save cleared because Play was pressed.");
     }
+#endif
 }

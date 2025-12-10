@@ -8,6 +8,10 @@ TagManager:
   - player
   - giant
   - grab
+  - ball
+  - distance
+  - player_hitbox
+  - player_distance
   layers:
   - Default
   - TransparentFX

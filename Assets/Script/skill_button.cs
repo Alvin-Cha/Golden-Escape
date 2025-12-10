@@ -44,6 +44,24 @@ public class skill_button : MonoBehaviour
 
     [HideInInspector] public bool buttonPressed3 = false;
 
+    // ------------------------------
+    // Dizzy Object VFX
+    // ------------------------------
+    [Header("Skill 1 Dizzy VFX")]
+    public GameObject spinPrefab;
+    private GameObject activeSpinObj;
+    private float spinSpeed = 220f;
+    private float fadeDuration = 0.35f;
+
+    // ------------------------------
+    // Camera Shake Settings
+    // ------------------------------
+    [Header("Camera Shake")]
+    public camera_shake camShake;
+    public float shakeDuration = 1f;
+    public float shakeMagnitude = 2.5f;
+
+
     void Start()
     {
         if (textCooldown1 != null) textCooldown1.gameObject.SetActive(false);
@@ -67,23 +85,51 @@ public class skill_button : MonoBehaviour
 
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Keypad4))
+            Skill1();
+
+        if (Input.GetKeyDown(KeyCode.Keypad6))
+            Skill2();
+        // ------------------------------
+        // Skill 2 UI state update
+        // ------------------------------
         if (playerInGrab)
         {
-            if (skill2Frame != null && skill2ActiveFrame != null)
-                skill2Frame.sprite = skill2ActiveFrame;
-            if (skill2Icon != null && skill2ActiveIcon != null)
-                skill2Icon.sprite = skill2ActiveIcon;
+            if (skill2Frame != null) skill2Frame.sprite = skill2ActiveFrame;
+            if (skill2Icon != null) skill2Icon.sprite = skill2ActiveIcon;
         }
         else
         {
-            if (skill2Frame != null && skill2NormalFrame != null)
-                skill2Frame.sprite = skill2NormalFrame;
-            if (skill2Icon != null && skill2NormalIcon != null)
-                skill2Icon.sprite = skill2NormalIcon;
+            if (skill2Frame != null) skill2Frame.sprite = skill2NormalFrame;
+            if (skill2Icon != null) skill2Icon.sprite = skill2NormalIcon;
         }
 
         if (isCoolDown1) ApplyCooldown1();
         if (isCoolDown3) ApplyCooldown3();
+
+        // ------------------------------
+        // Spin + Bob + Glow
+        // ------------------------------
+        if (activeSpinObj != null && girlTransform != null)
+        {
+            float heightOffset = 3.5f;
+            float bob = Mathf.Sin(Time.time * 3f) * 0.25f;
+
+            activeSpinObj.transform.position =
+                girlTransform.position +
+                new Vector3(0, heightOffset + bob, 0);
+
+            activeSpinObj.transform.Rotate(Vector3.up * spinSpeed * Time.deltaTime);
+
+            Renderer r = activeSpinObj.GetComponentInChildren<Renderer>();
+            if (r != null && r.material.HasProperty("_EmissionColor"))
+            {
+                float glow = (Mathf.Sin(Time.time * 5f) + 1f) * 0.5f;
+                Color baseColor = Color.white * 2f;
+                r.material.SetColor("_EmissionColor", baseColor * glow);
+            }
+        }
     }
 
     public void SetPlayerInGrab(bool inside)
@@ -92,7 +138,7 @@ public class skill_button : MonoBehaviour
     }
 
     // -----------------------------
-    // Skill 1 (Reverse Controls)
+    // Skill 1
     // -----------------------------
     public void Skill1()
     {
@@ -107,34 +153,88 @@ public class skill_button : MonoBehaviour
     {
         isReversed = true;
         playerMove.reverseControls = true;
+
+        // Spawn dizzy VFX
+        if (spinPrefab != null && activeSpinObj == null)
+        {
+            activeSpinObj = Instantiate(spinPrefab);
+            StartCoroutine(FadeInObject(activeSpinObj));
+        }
+
+        // 🔥 EXTREME SCREEN SHAKE FOR 1 SEC ONLY
+        if (camShake != null)
+            camShake.TriggerShake(shakeDuration, shakeMagnitude);
+
         yield return new WaitForSeconds(reverseDuration);
+
         playerMove.reverseControls = false;
         isReversed = false;
+
+        // Fade out and remove
+        if (activeSpinObj != null)
+        {
+            yield return StartCoroutine(FadeOutObject(activeSpinObj));
+            Destroy(activeSpinObj);
+        }
     }
 
     // -----------------------------
-    // Skill 2 (Grab)
+    // Fade In
+    // -----------------------------
+    private IEnumerator FadeInObject(GameObject obj)
+    {
+        Renderer r = obj.GetComponentInChildren<Renderer>();
+        if (r == null) yield break;
+
+        float t = 0;
+        while (t < fadeDuration)
+        {
+            float a = t / fadeDuration;
+            r.material.color = new Color(1, 1, 1, a);
+            t += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    // -----------------------------
+    // Fade Out
+    // -----------------------------
+    private IEnumerator FadeOutObject(GameObject obj)
+    {
+        Renderer r = obj.GetComponentInChildren<Renderer>();
+        if (r == null) yield break;
+
+        float t = 0;
+        while (t < fadeDuration)
+        {
+            float a = 1f - (t / fadeDuration);
+            r.material.color = new Color(1, 1, 1, a);
+            t += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    // -----------------------------
+    // Skill 2
     // -----------------------------
     public void Skill2()
     {
         if (playerInGrab)
         {
             if (girlTransform != null && giantTransform != null)
-                game_data.SavePositions(girlTransform, giantTransform);
+                data_game.SavePositions(girlTransform, giantTransform);
 
             SceneManager.LoadScene("grab_scene");
         }
     }
 
     // -----------------------------
-    // Skill 3 (Spike Summon)
+    // Skill 3
     // -----------------------------
     public void OnSkill3Pressed()
     {
         if (!isCoolDown3)
-        {
             buttonPressed3 = true;
-        }
     }
 
     public void UseCooldown3()
@@ -160,12 +260,11 @@ public class skill_button : MonoBehaviour
         {
             textCooldown3.text = cooldownTimer3.ToString("0.0");
             imageCooldown3.fillAmount = cooldownTimer3 / cooldownTime3;
-                new Vector3(0, 0, 360.0f * (cooldownTimer3 / cooldownTime3));
         }
     }
 
     // -----------------------------
-    // Skill 1 Cooldown System
+    // Skill 1 Cooldown
     // -----------------------------
     void ApplyCooldown1()
     {
@@ -181,7 +280,6 @@ public class skill_button : MonoBehaviour
         {
             textCooldown1.text = cooldownTimer1.ToString("0.0");
             imageCooldown1.fillAmount = cooldownTimer1 / cooldownTime1;
-                new Vector3(0, 0, 360.0f * (cooldownTimer1 / cooldownTime1));
         }
     }
 

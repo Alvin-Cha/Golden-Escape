@@ -23,7 +23,7 @@ public class destruct : MonoBehaviour
             player_movement player = info.collider.GetComponent<player_movement>();
             if (player != null)
             {
-                player.speed -= 1f;
+                player.speed -= 2.5f;
                 if (player.speed < 0f) player.speed = 0f; // clamp to 0
             }
 

@@ -6,12 +6,25 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 32254c81c8bfecc419307563597e52bf
+  - enabled: 1
+    path: Assets/Scenes/game_duo.unity
+    guid: 89fe0fdfb6f567c4fb35ca5a639abf18
+  - enabled: 1
     path: Assets/Scenes/grab_scene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/SampleScene 1.unity
-    guid: 89fe0fdfb6f567c4fb35ca5a639abf18
-  - enabled: 1
     path: Assets/Scenes/Giant_victory_scene.unity
-    guid: 32254c81c8bfecc419307563597e52bf
+    guid: a72080908d527874c9ac8a70b84b6057
+  - enabled: 1
+    path: Assets/Scenes/Girl_victory_scene.unity
+    guid: ebec6bcfd9608054a89e2db3fce6cdb7
+  - enabled: 1
+    path: Assets/Scenes/solo_grab_scene.unity
+    guid: d62c3742427b10c4c8169dae45d6402a
+  - enabled: 1
+    path: Assets/Scenes/game_solo.unity
+    guid: 6753f2bbec65f3e4e8750c0e3f8895a0
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
