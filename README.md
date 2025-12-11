@@ -1,8 +1,9 @@
 # Golden Escapade
+![A3 Poster](Image%20and%20videos/A3.jpg)
 ## Project info
-Editor Version : 2021.3.45f1 ---Updated---> 6000.2.12f1
-Ui Design : Corel DRAW 2020
-3D Modeling : Blender 4.3
+Editor Version : 2021.3.45f1 ---Updated---> 6000.2.12f1  
+Ui Design : Corel DRAW 2020  
+3D Modeling : Blender 4.3   
 
 # Developer & Contributions
 **Alvin Chandrawinata** — Game Developer & Game Designer
@@ -139,3 +140,4 @@ flowchart TB
 # Download Game
 
 Link to the game : https://nivtee.itch.io/golden-escapade?secret=brGGJnaQqHVjSrMpvJtqmXnQwM
+![A3 Poster](Image%20and%20videos/poster.jpg)
