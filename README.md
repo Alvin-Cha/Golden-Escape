@@ -1,5 +1,6 @@
 # Golden Escapade
 ![A3 Poster](Image%20and%20videos/A3.jpg)
+
 ## Project info
 Editor Version : 2021.3.45f1 ---Updated---> 6000.2.12f1  
 Ui Design : Corel DRAW 2020  
@@ -23,6 +24,9 @@ The game focuses on:
 - Real-time distance tracking between runners
 
 Both players have unique abilities with cooldowns, encouraging prediction, skill checks, and moment-to-moment decision making.
+
+# Gameplay
+![A3 Poster](Image%20and%20videos/Gameplay.jpg)
 
 # Game Objective
 ### Girl (Timun Mas) Objective
@@ -140,4 +144,5 @@ flowchart TB
 # Download Game
 
 Link to the game : https://nivtee.itch.io/golden-escapade?secret=brGGJnaQqHVjSrMpvJtqmXnQwM
+   
 ![A3 Poster](Image%20and%20videos/poster.jpg)
