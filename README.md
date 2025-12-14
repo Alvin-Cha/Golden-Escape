@@ -7,7 +7,7 @@ Ui Design : Corel DRAW 2020
 3D Modeling : Blender 4.3   
 
 # Developer & Contributions
-**Alvin Chandrawinata** — Game Developer & Game Designer
+**Alvin Chandrawinata** — Game Developer & Game Designer (12 days)
 
 # Introduction
 Golden Escapade is inspired by the classic folktale Timun Mas. This game is all about the escape scene changed into an intense 1v1 chase between Timun Mas (the Girl) and the Green Giant. Where both players must think fast, react faster, and use their abilities strategically to win.
