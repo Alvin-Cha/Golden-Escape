@@ -7,15 +7,9 @@ public class collector : MonoBehaviour
 
     void Start()
     {
-        // auto-find girl_skill safely
         if (girlSkill == null)
         {
             girlSkill = FindObjectOfType<girl_skill>();
-
-            if (girlSkill == null)
-            {
-                Debug.LogError("⚠️ No 'girl_skill' found in scene!");
-            }
         }
     }
 
@@ -29,11 +23,6 @@ public class collector : MonoBehaviour
         {
             girlSkill.AddEnergyFromBall();
         }
-        else
-        {
-            Debug.LogWarning("⚠️ collector: girlSkill reference missing!");
-        }
-
         Destroy(other.gameObject);
     }
 }

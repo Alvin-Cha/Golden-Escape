@@ -26,5 +26,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/game_solo.unity
     guid: 6753f2bbec65f3e4e8750c0e3f8895a0
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: 414c92ec86c237f46bf0ddda9d8a0032
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
